@@ -116,7 +116,7 @@ const TEXTS = [
     { translator: "Brashler, Dirkse & Parrott (CGLP)", url: `${BASE_URL}/discorse.html` }
   ]},
   { id: "prayer-of-thanksgiving", title: "The Prayer of Thanksgiving", codex: "VI", position: 7, translations: [
-    { translator: "Brashler, Dirkse & Parrott (CGLP)", url: `${BASE_URL}/pray-thanks.html` }
+    { translator: "Brashler, Dirkse & Parrott (CGLP)", url: `${BASE_URL}/prat.html` }
   ]},
 
   // CODEX VII
@@ -135,13 +135,13 @@ const TEXTS = [
     { translator: "Peel & Zandee (CGLP)", url: `${BASE_URL}/silvanus.html` }
   ]},
   { id: "three-steles-of-seth", title: "The Three Steles of Seth", codex: "VII", position: 5, translations: [
-    { translator: "Meyer & Barnstone", url: `${BASE_URL}/steles-barnstone.html` },
+    { translator: "Meyer & Barnstone", url: `${BASE_URL}/steles-meyer.html` },
     { translator: "Robinson (CGLP)", url: `${BASE_URL}/steles.html` }
   ]},
 
   // CODEX VIII
   { id: "zostrianos", title: "Zostrianos", codex: "VIII", position: 1, translations: [
-    { translator: "Sieber (CGLP)", url: `${BASE_URL}/zostrian.html` }
+    { translator: "Sieber (CGLP)", url: `${BASE_URL}/zostr.html` }
   ]},
   { id: "letter-of-peter-to-philip", title: "The Letter of Peter to Philip", codex: "VIII", position: 2, translations: [
     { translator: "Meyer", url: `${BASE_URL}/letpet-meyer.html` },
@@ -161,7 +161,7 @@ const TEXTS = [
 
   // CODEX XI
   { id: "interpretation-of-knowledge", title: "The Interpretation of Knowledge", codex: "XI", position: 1, translations: [
-    { translator: "Turner (CGLP)", url: `${BASE_URL}/interp.html` }
+    { translator: "Turner (CGLP)", url: `${BASE_URL}/intpr.html` }
   ]},
   { id: "allogenes", title: "Allogenes — The Foreigner", codex: "XI", position: 3, translations: [
     { translator: "Turner & Wintermute (CGLP)", url: `${BASE_URL}/allogene.html` }
@@ -191,7 +191,15 @@ async function fetchTextContent(url) {
 
   let text = $("body").text();
 
-  const dividerIndex = text.indexOf("_____");
+  // Same approach as before (find a "_____" divider and slice after it),
+  // with ONE change: use the LAST underscore divider on the page instead
+  // of the first. Some pages have a short underscore rule right under
+  // the title, then a second one after the translator-credit line, right
+  // before the actual text. Taking the first one left the credits line
+  // attached to the front of the content on those pages. Taking the last
+  // one (when there are two) gets past that, while behaving exactly the
+  // same as before on pages that only have one divider.
+  const dividerIndex = text.lastIndexOf("_____");
   if (dividerIndex !== -1) {
     text = text.slice(dividerIndex).replace(/^[_\s]+/, "");
   }
