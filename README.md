@@ -107,14 +107,7 @@ GnosticLibrary/
 
 **Codex XIII** — Trimorphic Protennoia
 
----
 
-## Hosting
-
-This app requires a Node.js server to run. It cannot be hosted on GitHub Pages (static only). Recommended free hosting:
-
-- **[Railway](https://railway.app)** — connect your GitHub repo, deploys automatically on every push
-- **[Render](https://render.com)** — similar, free tier available
 
 ---
 
